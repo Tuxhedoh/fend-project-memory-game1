@@ -25,14 +25,57 @@ function shuffle(array) {
     return array;
 }
 
+// Feature
+    // flipping cards
+    // match cards
+    // diamond, plane, anchor, paper-plane, bolt, leaf, bicycle, bomb
 
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
+
+//create a single card    
+{/* 
+    <li class="card">
+        <i class="fa fa-leaf"></i>
+    </li>
+ */}
+function createCard(className) {
+    return myCard =
+    `<li class="card open show">
+        <i class="fa ${className}"></i>
+    </li>`
+}
+let myDeck 
+function createDeck(){
+    myDeck = [];
+    const suites=["fa-diamond","fa-paper-plane","fa-anchor","fa-bolt","fa-leaf","fa-bicycle","fa-bomb","fa-cube"];
+    for(let suite of suites){
+        for(let i = 0; i<2; i++){
+            myDeck.push(createCard(suite));
+        }
+    }
+    return shuffle(myDeck);
+
+}
+function createGameboard(){
+   document.querySelector(".deck").innerHTML = myDeck.join("\n");
+}
+
+function flipCard(card1, card2){
+
+
+}
+
+function compareCards(card1, card2) {
+
+
+}
+
+function gameEnd(){
+
+
+}
+
+function gameStart(){
+    createDeck();
+    createGameboard();
+}
+gameStart();
