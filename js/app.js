@@ -1,14 +1,5 @@
-/*
- * Create a list that holds all of your cards
- */
-
-
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
+let myDeck;
+    flippedCards = [];
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -32,18 +23,13 @@ function shuffle(array) {
 
 
 //create a single card    
-{/* 
-    <li class="card">
-        <i class="fa fa-leaf"></i>
-    </li>
- */}
 function createCard(className) {
     return myCard =
-    `<li class="card open show">
+    `<li class="card">
         <i class="fa ${className}"></i>
     </li>`
 }
-let myDeck 
+// create the deck of cards
 function createDeck(){
     myDeck = [];
     const suites=["fa-diamond","fa-paper-plane","fa-anchor","fa-bolt","fa-leaf","fa-bicycle","fa-bomb","fa-cube"];
@@ -55,8 +41,15 @@ function createDeck(){
     return shuffle(myDeck);
 
 }
+
+// add the deck of cards to the gameboard.
 function createGameboard(){
-   document.querySelector(".deck").innerHTML = myDeck.join("\n");
+   const deck = document.querySelector(".deck");
+   deck.innerHTML = myDeck.join("\n");
+   deck.addEventListener('click',function(e){  //click listener to flip cards.
+    flippedCards.push(e.target.firstElementChild.classList);
+   })
+   
 }
 
 function flipCard(card1, card2){
