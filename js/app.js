@@ -104,6 +104,7 @@ function cardsMatched(){                // we need to do some more stuff here
 
     for(let i = 0; i<flippedCards.length; i++){
         flippedCards[i].parentElement.removeEventListener("click", clickCard);
+        flippedCards[i].parentElement.classList.add("match");
     }
     flippedCards = [];
 
