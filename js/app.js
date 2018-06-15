@@ -1,6 +1,17 @@
 let myDeck,
     lastClick,
-    flippedCards = [];
+    moves = 0,
+    flippedCards = [],
+    matches = 0,
+    myStars ="";
+    
+const moveTracker = document.querySelector(".moves"),
+      restartBtn = document.querySelector(".restart"),
+      stars = document.querySelector(".stars")
+      fullStar =`<li><i class="fa fa-star"></i></li>`,
+      halfStar =`<li><i class="fa fa-star-half-o"></i></li>`;
+
+restartBtn.addEventListener("click",gameStart);
     
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -67,7 +78,8 @@ function clickCard(card){   // when we click a card what happens?
 
 
 function flipCard(card){            // what happens when card is clicked?
-    // console.log(card.target);
+    moves++;
+    moveTracker.innerText=moves;
     card.removeEventListener("click",clickCard)
     card.classList.add("show");     // shows the card
     card.classList.add("open");  
@@ -87,10 +99,21 @@ function flipCard(card){            // what happens when card is clicked?
 
 function cardsMatched(){                // we need to do some more stuff here
     console.log("You Matched!");
+    matches++;
+    buildStarsString(matches);
+
     for(let i = 0; i<flippedCards.length; i++){
         flippedCards[i].parentElement.removeEventListener("click", clickCard);
     }
     flippedCards = [];
+
+    gameWin();
+}
+
+function gameWin(){
+    if(matches === 8){
+        console.log("You Win!")
+    }
 }
 
 function cardsNotMatched() {
@@ -118,6 +141,21 @@ function resetCards(){  // after 2 cards are clicked and not matched
     }
     
 }
+
+function buildStarsString(matches){
+    myStars="";
+    let wholeStars = Math.floor(matches / 2);
+    let partialStars = matches %2;
+    for(let i = 0; i< wholeStars; i++){
+        myStars+=fullStar;
+    }
+    if(partialStars){
+        myStars+=halfStar;
+    }
+    stars.innerHTML = myStars;
+}
+
+
 function gameEnd(){
 
 
@@ -126,5 +164,11 @@ function gameEnd(){
 function gameStart(){
     createDeck();
     createGameboard();
+    moveTracker.innerText = 0;
+    stars.innerHTML=`<li><i class="fa fa-star-o"></i></li>
+    <li><i class="fa fa-star-o"></i></li>
+    <li><i class="fa fa-star-o"></i></li>
+    <li><i class="fa fa-star-o"></i></li>
+    `
 }
 gameStart();
