@@ -165,11 +165,8 @@ function gameEnd(){
 function gameStart(){
     createDeck();
     createGameboard();
-    moveTracker.innerText = 0;
-    stars.innerHTML=`<li><i class="fa fa-star-o"></i></li>
-    <li><i class="fa fa-star-o"></i></li>
-    <li><i class="fa fa-star-o"></i></li>
-    <li><i class="fa fa-star-o"></i></li>
-    `
+    moves = 0;
+    moveTracker.innerText = moves;
+
 }
 gameStart();
