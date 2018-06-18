@@ -88,9 +88,11 @@ h1 {
 .score-panel {
     display: grid;
     text-align: left;
-    width: 345px;
+    width: 600px;
     margin-bottom: 10px;
     grid-template-columns: repeat(4,1fr);
+    justify-items: center;
+    justify-content: space-evenly;
 }
 
 .score-panel .stars {
@@ -184,6 +186,7 @@ h1 {
 
 .modal-content{
     background-color: whitesmoke;
+    text-align: center;
     margin: 20% auto;
     width: 80%;
     padding: 25px;

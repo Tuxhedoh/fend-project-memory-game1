@@ -1,10 +1,11 @@
+// Define Global Variables
 let myDeck,
     lastClick,
     moves = 0,
     flippedCards = [],
     matches = 0,
-    myStars ="",
-    score,
+    myStars = 0,
+    score = 0,
     totalSeconds = 0;
 
     
@@ -15,6 +16,7 @@ const moveTracker = document.querySelector(".moves"),
       deck = document.querySelector(".deck"),
       fullStar =`<li><i class="fa fa-star"></i></li>`,
       halfStar =`<li><i class="fa fa-star-half-o"></i></li>`,
+      emptyStar =`<li><i class="fa fa-star-o"></i></li>`,
       timerVar = setInterval(countTimer, 1000),
       resetModal = document.getElementById('resetModal'),
       winModal = document.getElementById('winModal'),
@@ -22,8 +24,25 @@ const moveTracker = document.querySelector(".moves"),
       resetBtn = document.getElementsByClassName("resetBtn"),
       closeBtn = document.getElementsByClassName("close")[0];
 
+// Event Listeners
 
-restartBtn.addEventListener("click",gameStart);
+// Modal Logic
+    // Close Modal without reset.
+window.addEventListener("click", function(e){
+    if (e.target == winModal || e.target == resetModal) {
+        e.target.style.display = "none";
+    }
+})
+
+restartBtn.addEventListener("click",function(){
+    resetModal.style.display="block";
+});
+
+for(let i =0; i< resetBtn.length; i++){
+    resetBtn[i].addEventListener("click",gameStart);
+ 
+}
+
     
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -40,12 +59,7 @@ function shuffle(array) {
     return array;
 }
 
-// Feature
-    // flipping cards
-    // match cards
-    // diamond, plane, anchor, paper-plane, bolt, leaf, bicycle, bomb
-
-
+// Game Functions
 //create a single card    
 function createCard(className) {
     return myCard =
@@ -87,8 +101,6 @@ function clickCard(card){   // when we click a card what happens?
     }
 }
 
-
-
 function flipCard(card){            // what happens when card is clicked?
     moves++;
     moveTracker.innerText=moves;
@@ -100,27 +112,11 @@ function flipCard(card){            // what happens when card is clicked?
     if(flippedCards.length === 2){ 
         if(compareCards(flippedCards)){ 
             cardsMatched();                
-        } else {
-            cardsNotMatched();
         }
     }    
     if(flippedCards.length > 2){
         resetCards();
     }
-}
-
-function cardsMatched(){                // we need to do some more stuff here
-    console.log("You Matched!");
-    matches++;
-    buildStarsString(matches);
-
-    for(let i = 0; i<flippedCards.length; i++){
-        flippedCards[i].parentElement.removeEventListener("click", clickCard);
-        flippedCards[i].parentElement.classList.add("match");
-    }
-    flippedCards = [];
-
-    gameWin();
 }
 
 function gameWin(){
@@ -130,18 +126,23 @@ function gameWin(){
     }
 }
 
-function cardsNotMatched() {
-    deck.classList.add("shake");
-    console.log("Keep Trying");
-    
-}
-
 function compareCards(array) {  // checking for match
             const class1 = array[0].classList[1];
             const class2 =array[1].classList[1];
             return (class1 === class2)   // if the cards match, return true, otherwise false   
 }
 
+function cardsMatched(){              // When a card matches we do this 
+    matches++;
+
+    for(let i = 0; i<flippedCards.length; i++){
+        flippedCards[i].parentElement.removeEventListener("click", clickCard);
+        flippedCards[i].parentElement.classList.add("match");
+    }
+    flippedCards = [];
+
+    gameWin();
+}
 
 function resetCards(){  // after 2 cards are clicked and not matched
 
@@ -158,73 +159,71 @@ function resetCards(){  // after 2 cards are clicked and not matched
     
 }
 
-function buildStarsString(matches){
-    myStars="";
-    let wholeStars = Math.floor(matches / 2);
-    let partialStars = matches %2;
-    for(let i = 0; i< wholeStars; i++){
-        myStars+=fullStar;
-    }
-    if(partialStars){
-        myStars+=halfStar;
-    }
-    stars.innerHTML = myStars;
-}
-
-
-function gameEnd(){
-
-
-}
-
 function gameStart(){
     totalSeconds=0;
+
     createDeck();
     createGameboard();
     resetModal.style.display="none";
     winModal.style.display="none";
+    stars.innerHTML=fullStar+fullStar+fullStar+fullStar;
     
     
-    
-    if(moves === 0){
-        stars.innerHTML=`<li><i class="fa fa-star-o"></i></li>
-    <li><i class="fa fa-star-o"></i></li>
-    <li><i class="fa fa-star-o"></i></li>
-    <li><i class="fa fa-star-o"></i></li>
-    `} else {
-        stars.innerHTML="";
-    }
+
     moves = 0;
     moveTracker.innerText = moves;
 
 }
-gameStart();
+
 
 // https://stackoverflow.com/questions/5517597/plain-count-up-timer-in-javascript
+
 function countTimer() {
-    ++totalSeconds;
+     ++totalSeconds;
     let hour = Math.floor(totalSeconds /3600);
     let minute = Math.floor((totalSeconds - hour*3600)/60);
     let seconds = totalSeconds - (hour*3600 + minute*60);
-    score =   minute + "m :" + seconds+"s"
+    score =   minute + " min " + seconds+" secs"
     timer.innerHTML =  score;
+    newStars(totalSeconds);
+
 } 
 
-// Modal Logic
-// Close Modal without reset.
-window.addEventListener("click", function(e){
-    if (e.target == winModal || e.target == resetModal) {
-        e.target.style.display = "none";
+function newStars(num){
+       
+    switch(true){
+        case num <= 30:
+            stars.innerHTML=fullStar+fullStar+fullStar+fullStar;
+            break;
+        case num  > 30 && num <=60 :
+            stars.innerHTML=fullStar+fullStar+fullStar+halfStar;
+            break;
+        case num  > 60 && num <=90 :
+            stars.innerHTML=fullStar+fullStar+fullStar+emptyStar;
+            break;
+        case num  > 90 && num <=120 :
+            stars.innerHTML=fullStar+fullStar+halfStar+emptyStar;
+            break;
+        case num  > 120 && num <=150 :
+            stars.innerHTML=fullStar+fullStar+emptyStar+emptyStar;
+            break;
+        case num  > 150 && num <=180 :
+            stars.innerHTML=fullStar+halfStar+emptyStar+emptyStar;
+            break;
+        case num  > 180 && num <=210 :
+            stars.innerHTML=fullStar+emptyStar+emptyStar+emptyStar;
+            break;
+        case num  > 210 && num <= 240:
+            stars.innerHTML = halfStar+emptyStar+emptyStar+emptyStar;
+            break;
+        case num  > 240 :
+            stars.innerHTML=emptyStar+emptyStar+emptyStar+emptyStar;
+            break;
+        default:
+            console.log("Not matching any condition")
     }
-})
-
-
-restartBtn.addEventListener("click",function(){
-    resetModal.style.display="block";
-});
-
-
-for(let i =0; i< resetBtn.length; i++){
-    resetBtn[i].addEventListener("click",gameStart);
- 
 }
+
+
+
+gameStart();
