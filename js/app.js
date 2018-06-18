@@ -3,13 +3,25 @@ let myDeck,
     moves = 0,
     flippedCards = [],
     matches = 0,
-    myStars ="";
+    myStars ="",
+    score,
+    totalSeconds = 0;
+
     
 const moveTracker = document.querySelector(".moves"),
       restartBtn = document.querySelector(".restart"),
-      stars = document.querySelector(".stars")
+      stars = document.querySelector(".stars"),
+      timer = document.querySelector(".timer"),
+      deck = document.querySelector(".deck"),
       fullStar =`<li><i class="fa fa-star"></i></li>`,
-      halfStar =`<li><i class="fa fa-star-half-o"></i></li>`;
+      halfStar =`<li><i class="fa fa-star-half-o"></i></li>`,
+      timerVar = setInterval(countTimer, 1000),
+      resetModal = document.getElementById('resetModal'),
+      winModal = document.getElementById('winModal'),
+      yourScore = document.querySelector(".scoreSpan"),
+      resetBtn = document.getElementsByClassName("resetBtn"),
+      closeBtn = document.getElementsByClassName("close")[0];
+
 
 restartBtn.addEventListener("click",gameStart);
     
@@ -56,7 +68,7 @@ function createDeck(){
 
 // add the deck of cards to the gameboard.
 function createGameboard(){
-   const deck = document.querySelector(".deck");
+   
    deck.innerHTML = myDeck.join("\n");
 
    const cards = document.querySelectorAll(".card");
@@ -112,13 +124,16 @@ function cardsMatched(){                // we need to do some more stuff here
 }
 
 function gameWin(){
+    yourScore.innerText = score;
     if(matches === 8){
-        console.log("You Win!")
+        winModal.style.display = "block";
     }
 }
 
 function cardsNotMatched() {
+    deck.classList.add("shake");
     console.log("Keep Trying");
+    
 }
 
 function compareCards(array) {  // checking for match
@@ -163,10 +178,53 @@ function gameEnd(){
 }
 
 function gameStart(){
+    totalSeconds=0;
     createDeck();
     createGameboard();
+    resetModal.style.display="none";
+    winModal.style.display="none";
+    
+    
+    
+    if(moves === 0){
+        stars.innerHTML=`<li><i class="fa fa-star-o"></i></li>
+    <li><i class="fa fa-star-o"></i></li>
+    <li><i class="fa fa-star-o"></i></li>
+    <li><i class="fa fa-star-o"></i></li>
+    `} else {
+        stars.innerHTML="";
+    }
     moves = 0;
     moveTracker.innerText = moves;
 
 }
 gameStart();
+
+// https://stackoverflow.com/questions/5517597/plain-count-up-timer-in-javascript
+function countTimer() {
+    ++totalSeconds;
+    let hour = Math.floor(totalSeconds /3600);
+    let minute = Math.floor((totalSeconds - hour*3600)/60);
+    let seconds = totalSeconds - (hour*3600 + minute*60);
+    score =   minute + "m :" + seconds+"s"
+    timer.innerHTML =  score;
+} 
+
+// Modal Logic
+// Close Modal without reset.
+window.addEventListener("click", function(e){
+    if (e.target == winModal || e.target == resetModal) {
+        e.target.style.display = "none";
+    }
+})
+
+
+restartBtn.addEventListener("click",function(){
+    resetModal.style.display="block";
+});
+
+
+for(let i =0; i< resetBtn.length; i++){
+    resetBtn[i].addEventListener("click",gameStart);
+ 
+}

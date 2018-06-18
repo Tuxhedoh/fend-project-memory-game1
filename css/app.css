@@ -86,31 +86,45 @@ h1 {
  */
 
 .score-panel {
+    display: grid;
     text-align: left;
     width: 345px;
     margin-bottom: 10px;
+    grid-template-columns: repeat(4,1fr);
 }
 
 .score-panel .stars {
     margin: 0;
     padding: 0;
-    display: inline-block;
     margin: 0 5px 0 0;
 }
 
 .score-panel .stars li {
     list-style: none;
     display: inline-block;
-}
+    }
 
 .score-panel .restart {
-    float: right;
     cursor: pointer;
 }
 
 /* https://css-tricks.com/snippets/css/shake-css-keyframe-animation/  */
 
-.card:hover {
+.card:not(.match):hover {   /*https://www.w3schools.com/cssref/sel_not.asp*/
+    animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+.card.match:hover {   /*https://www.w3schools.com/cssref/sel_not.asp*/
+    animation: bounce 0.82s cubic-bezier(.36,.07,.19,.97) both;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+.shake {
     animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
     transform: translate3d(0, 0, 0);
     backface-visibility: hidden;
@@ -134,3 +148,44 @@ h1 {
       transform: translate3d(4px, 0, 0);
     }
   }
+
+  @keyframes bounce {
+    10%, 90% {
+      transform: translate3d(0, -1px, 0);
+    }
+    
+    20%, 80% {
+      transform: translate3d(0, 2px, 0);
+    }
+  
+    30%, 50%, 70% {
+      transform: translate3d(0, -4px, 0);
+    }
+  
+    40%, 60% {
+      transform: translate3d(0, 4px, 0);
+    }
+  }
+
+
+  /* Modal Styling */
+
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1; 
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; 
+    background-color: rgba(100,149,237,0.4);
+}
+
+.modal-content{
+    background-color: whitesmoke;
+    margin: 20% auto;
+    width: 80%;
+    padding: 25px;
+    border: 1px solid cyan;
+}

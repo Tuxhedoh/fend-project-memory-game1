@@ -18,9 +18,14 @@
         <section class="score-panel">
         	<ul class="stars">
 
-        	</ul>
-
-        	<span class="moves">3</span> Moves
+            </ul>
+         
+            <div class="movesDiv">
+                <span class="moves">3</span> Moves
+            </div>
+            
+            
+            <span class="timer"></span>
 
             <div class="restart">
         		<i class="fa fa-repeat"></i>
@@ -30,6 +35,23 @@
         <ul class="deck">
             
         </ul>
+
+        <!-- // Modal  -->
+        <div id="resetModal" class="modal">
+            <div class="modal-content">
+                <p>Do you really want to reset? To cancel, click outside of this box.</p>
+                <button class="resetBtn">Yes</button>
+            </div>
+        </div>
+        <div id="winModal" class="modal">
+                <div class="modal-content">
+                    <p>Hooray!  You won!</p>
+                    <p>You found all of the matches in <span class="scoreSpan"></span></p>
+                    <p> Play again?</p>
+                    <button class="resetBtn">Yes</button>
+                    
+                </div>
+            </div>
     </div>
 
     <script src="js/app.js"></script>
