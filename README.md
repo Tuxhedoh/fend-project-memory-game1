@@ -4,17 +4,20 @@
 
 * [Instructions](#instructions)
 * [Contributing](#contributing)
+* [Resources](#resources)
 
 ## Instructions
+Click on any card to start the timer. Try to get 4 stars by matching all of the cards in under 30 seconds.
 
-The starter project has some HTML and CSS styling to display a static version of the Memory Game project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
-
-To get started, open `js/app.js` and start building out the app's functionality
-
-For specific, detailed instructions, look at the project instructions in the [Udacity Classroom](https://classroom.udacity.com/me).
+## Resources
+I used the following resources in building out the project.
+* [Timer functionality](https://stackoverflow.com/questions/5517597/plain-count-up-timer-in-javascript)
+* [Modal's](https://www.w3schools.com/howto/howto_css_modals.asp)
+* [Built-in Shuffle (provided in original source)](http://stackoverflow.com/a/2450976)
+* [Font Awesome](https://fontawesome.com/)
+* [Coda Font (from Google)](https://fonts.google.com/specimen/Coda)
 
 ## Contributing
 
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
+Feel free to offer any suggestions.
 
-For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).

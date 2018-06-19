@@ -109,14 +109,16 @@ function clickCard(card){   // when we click a card what happens?
 }
 
 function flipCard(card){            // what happens when card is clicked?
-    moves++;
-    moveTracker.innerText=moves;
+    
+    
     card.removeEventListener("click",clickCard)
     card.classList.add("show");     // shows the card
     card.classList.add("open");  
     flippedCards.push(card.lastElementChild);   // adds clicked card to flippedCards array
 
     if(flippedCards.length === 2){ 
+        moves++;
+        moveTracker.innerText=moves;
         if(compareCards(flippedCards)){ 
             cardsMatched();                
         }
