@@ -192,3 +192,13 @@ h1 {
     padding: 25px;
     border: 1px solid cyan;
 }
+
+#starScore{
+    list-style: none;
+    font-size: 3em;
+}
+
+#starScore li {
+    display: inline-block;
+
+}

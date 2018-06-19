@@ -24,7 +24,8 @@ const moveTracker = document.querySelector(".moves"),
       winModal = document.getElementById('winModal'),
       yourScore = document.querySelector(".scoreSpan"),
       resetBtn = document.getElementsByClassName("resetBtn"),
-      closeBtn = document.getElementsByClassName("close")[0];
+      closeBtn = document.getElementsByClassName("close")[0],
+      starScore = document.getElementById("starScore");
 
 // Event Listeners
 
@@ -126,6 +127,7 @@ function flipCard(card){            // what happens when card is clicked?
 }
 
 function gameWin(){
+    starScore.innerHTML = stars.innerHTML;
     yourScore.innerText = score;
     if(matches === 8){
         winModal.style.display = "block";
