@@ -6,18 +6,20 @@ let myDeck,
     matches = 0,
     myStars = 0,
     score = 0,
-    totalSeconds = 0;
+    totalSeconds = 0,
+    timerVar = setInterval(countTimer, 1000),
+    runningTimer=false;
 
     
 const moveTracker = document.querySelector(".moves"),
       restartBtn = document.querySelector(".restart"),
       stars = document.querySelector(".stars"),
       timer = document.querySelector(".timer"),
+      
       deck = document.querySelector(".deck"),
       fullStar =`<li><i class="fa fa-star"></i></li>`,
       halfStar =`<li><i class="fa fa-star-half-o"></i></li>`,
       emptyStar =`<li><i class="fa fa-star-o"></i></li>`,
-      timerVar = setInterval(countTimer, 1000),
       resetModal = document.getElementById('resetModal'),
       winModal = document.getElementById('winModal'),
       yourScore = document.querySelector(".scoreSpan"),
@@ -92,6 +94,10 @@ function createGameboard(){
 }
 
 function clickCard(card){   // when we click a card what happens?
+    if(!runningTimer){
+        runningTimer=true;
+        timerVar = setInterval(countTimer, 1000);
+    }
     // console.log(card);
     if(lastClick === card) {
         console.log("Clicked the same card twice");
@@ -160,33 +166,34 @@ function resetCards(){  // after 2 cards are clicked and not matched
 }
 
 function gameStart(){
+    runningTimer=false;
+    clearInterval(timerVar);
     totalSeconds=0;
+    score =   "0 min 0 secs";
+    matches=0;
+    moves = 0;
+    moveTracker.innerText = moves;
+    stars.innerHTML=fullStar+fullStar+fullStar+fullStar;
+    timer.innerHTML =  score;
+    
+    resetModal.style.display="none";
+    winModal.style.display="none";
 
     createDeck();
     createGameboard();
-    resetModal.style.display="none";
-    winModal.style.display="none";
-    stars.innerHTML=fullStar+fullStar+fullStar+fullStar;
-    
-    
-
-    moves = 0;
-    moveTracker.innerText = moves;
-
 }
 
 
 // https://stackoverflow.com/questions/5517597/plain-count-up-timer-in-javascript
 
 function countTimer() {
-     ++totalSeconds;
-    let hour = Math.floor(totalSeconds /3600);
-    let minute = Math.floor((totalSeconds - hour*3600)/60);
-    let seconds = totalSeconds - (hour*3600 + minute*60);
-    score =   minute + " min " + seconds+" secs"
-    timer.innerHTML =  score;
-    newStars(totalSeconds);
-
+        ++totalSeconds;
+        let hour = Math.floor(totalSeconds /3600);
+        let minute = Math.floor((totalSeconds - hour*3600)/60);
+        let seconds = totalSeconds - (hour*3600 + minute*60);
+        score =   minute + " min " + seconds+" secs"
+        timer.innerHTML =  score;
+        newStars(totalSeconds);
 } 
 
 function newStars(num){
