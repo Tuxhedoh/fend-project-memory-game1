@@ -219,14 +219,8 @@ function newStars(num){
         case num  > 150 && num <=180 :
             stars.innerHTML=fullStar+halfStar+emptyStar+emptyStar;
             break;
-        case num  > 180 && num <=210 :
+        case num  > 180:
             stars.innerHTML=fullStar+emptyStar+emptyStar+emptyStar;
-            break;
-        case num  > 210 && num <= 240:
-            stars.innerHTML = halfStar+emptyStar+emptyStar+emptyStar;
-            break;
-        case num  > 240 :
-            stars.innerHTML=emptyStar+emptyStar+emptyStar+emptyStar;
             break;
         default:
             console.log("Not matching any condition")
